@@ -1,5 +1,5 @@
 # license-checker
-Checks if a particular manga is licensed in English by looking it up on a set of given sites.
+Checks if a particular manga is licensed in English by looking it up on a given set of sites.
 ## Dependencies
 * Python 3.7.3+
 * The discord.py library
