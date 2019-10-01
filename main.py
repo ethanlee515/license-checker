@@ -19,7 +19,7 @@ async def on_ready():
 	print("bot is running...")
 
 cmd_prefix = re.compile(r"\.lc(:?\s+.*)?$")
-cmd_pattern1 = re.compile(r"\.lc\s+\"([^\"]+)\"\s+\"([^\"]+)\"$")
+cmd_pattern1 = re.compile(r'\.lc\s+"([^"]+)"\s+"([^"]+)"$')
 cmd_pattern2 = re.compile(r"\.lc\s+-(.)\s+(.+)\s+-(.)\s+(.+)$")
 err_invalid_cmd = ("Invalid command. Usage: `.lc \"author\" \"title\"` "
 	"or `.lc -a author -t title`")
