@@ -1,5 +1,5 @@
 # license-checker
-Checks if a particular manga is licensed by looking it up on a set of given sites.
+Checks if a particular manga is licensed in English by looking it up on a set of given sites.
 ## Dependencies
 * Python 3.6
 * library placeholder 1
