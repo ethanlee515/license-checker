@@ -18,14 +18,14 @@ lc = discord.Client()
 async def on_ready():
 	print("bot is running...")
 
-command_pattern1 = re.compile(r"^\.lc\s+\"([^\"]+)\"\s+\"([^\"]+)\"$")
-command_pattern2 = re.compile(r"^\.lc\s+-(.)(.+)\s+-(.)(.+)$")
+command_pattern1 = re.compile(r"\.lc\s+\"([^\"]+)\"\s+\"([^\"]+)\"$")
+command_pattern2 = re.compile(r"\.lc\s+-(.)(.+)\s+-(.)(.+)$")
 err_invalid_cmd = ("Invalid command. Usage: `.lc \"author\" \"title\"` "
 	"or `.lc -a author -t title`")
 
 @lc.event
 async def on_message(message):
-	if message.content.startswith(".lc"):
+	if re.match(".lc(:?\s+.*)?$", message.content):
 		content = message.content.strip().replace('“','"').replace('”','"')
 		match1 = command_pattern1.match(content)
 		match2 = command_pattern2.match(content)
