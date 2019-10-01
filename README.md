@@ -2,9 +2,7 @@
 Checks if a particular manga is licensed in English by looking it up on a set of given sites.
 ## Dependencies
 * Python 3.7.3+
-* Python libraries below
-	* discord.py
-	* Placeholder library 2
+* The discord.py library
 ## How to run
 * Create bot-token.txt and put your token in there
 * `python3.7 main.py` or simply `./main.py`
