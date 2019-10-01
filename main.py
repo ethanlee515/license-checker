@@ -18,17 +18,18 @@ lc = discord.Client()
 async def on_ready():
 	print("bot is running...")
 
-command_pattern1 = re.compile(r"\.lc\s+\"([^\"]+)\"\s+\"([^\"]+)\"$")
-command_pattern2 = re.compile(r"\.lc\s+-(.)(.+)\s+-(.)(.+)$")
+cmd_prefix = re.compile(r"\.lc(:?\s+.*)?$")
+cmd_pattern1 = re.compile(r"\.lc\s+\"([^\"]+)\"\s+\"([^\"]+)\"$")
+cmd_pattern2 = re.compile(r"\.lc\s+-(.)(.+)\s+-(.)(.+)$")
 err_invalid_cmd = ("Invalid command. Usage: `.lc \"author\" \"title\"` "
 	"or `.lc -a author -t title`")
 
 @lc.event
 async def on_message(message):
-	if re.match(".lc(:?\s+.*)?$", message.content):
+	if cmd_prefix.match(message.content):
 		content = message.content.strip().replace('“','"').replace('”','"')
-		match1 = command_pattern1.match(content)
-		match2 = command_pattern2.match(content)
+		match1 = cmd_pattern1.match(content)
+		match2 = cmd_pattern2.match(content)
 		if match1:
 			asyncio.create_task(message.channel.send(
 				f"author: {match1.group(1)}, title: {match1.group(2)}"))
