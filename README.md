@@ -5,7 +5,7 @@ Checks if a particular manga is licensed in English by looking it up on a set of
 * library placeholder 1
 * library placeholder 2
 ## How to run
-* Replace the bot-token.txt with your token
+* Create bot-token.txt and put your token in there
 * `python3 main.py` or simply `./main.py`
 * Give the Discord bot commands of the form `.lc "author" "title"`
 ## Sites and status
