@@ -33,10 +33,6 @@ except FileNotFoundError:
 
 lc = discord.Client()
 
-@lc.event
-async def on_ready():
-	print("bot is running...")
-
 cmd_prefix = re.compile(r"\.lc(:?\s+.*)?$")
 cmd_pattern1 = re.compile(r'\.lc\s+"([^"]+)"\s+"([^"]+)"$')
 cmd_pattern2 = re.compile(r"\.lc\s+-(.)\s+(.+)\s+-(.)\s+(.+)$")
@@ -68,5 +64,9 @@ async def on_message(message):
 	for site in site_modules:
 		m += f'\n{site.name}: Please wait...'
 	msg_sent = await asyncio.create_task(message.channel.send(m))
+
+@lc.event
+async def on_ready():
+	print("bot is running...")
 
 lc.run(token)
