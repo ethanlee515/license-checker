@@ -37,8 +37,6 @@ lc = discord.Client()
 cmd_prefix = re.compile(r"\.lc(:?\s+.*)?$")
 cmd_pattern1 = re.compile(r'\.lc\s+"([^"]+)"\s+"([^"]+)"$')
 cmd_pattern2 = re.compile(r"\.lc\s+-(.)\s+(.+)\s+-(.)\s+(.+)$")
-err_invalid_cmd = ("Invalid command. Usage: `.lc \"author\" \"title\"` "
-	"or `.lc -a author -t title`")
 
 async def edit_status(msg, name, status):
 	await msg.edit(content=
@@ -63,7 +61,8 @@ async def on_message(message):
 			elif match2.group(i) == 't':
 				title = match2.group(i + 1).strip().strip('"')
 	if author is None or len(author) == 0 or title is None or len(title) == 0:
-		asyncio.create_task(message.channel.send(err_invalid_cmd))
+		asyncio.create_task(message.channel.send('Invalid command. '
+			'Usage: `.lc "author" "title"` or `.lc -a author -t title`'))
 		return
 	msg = await asyncio.create_task(message.channel.send(
 		functools.reduce(
