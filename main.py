@@ -45,26 +45,28 @@ err_invalid_cmd = ("Invalid command. Usage: `.lc \"author\" \"title\"` "
 
 @lc.event
 async def on_message(message):
-	if cmd_prefix.match(message.content):
-		content = message.content.strip().replace('“','"').replace('”','"')
-		match1 = cmd_pattern1.match(content)
-		match2 = cmd_pattern2.match(content)
-		if match1:
-			asyncio.create_task(message.channel.send(
-				f"author: {match1.group(1)}, title: {match1.group(2)}"))
-		elif match2:
-			author = None
-			title = None
-			for i in (1, 3):
-				if match2.group(i) == 'a':
-					author = match2.group(i + 1).strip()
-				elif match2.group(i) == 't':
-					title = match2.group(i + 1).strip()
-			reply = (f"author: {author}, title: {title}" if 
-				author is not None and title is not None else 
-				err_invalid_cmd)
-			asyncio.create_task(message.channel.send(reply))
-		else:
-			asyncio.create_task(message.channel.send(err_invalid_cmd))
+	if not cmd_prefix.match(message.content):
+		return
+	content = message.content.strip().replace('“','"').replace('”','"')
+	author = None
+	title = None
+	match1 = cmd_pattern1.match(content)
+	match2 = cmd_pattern2.match(content)
+	if match1:
+		author = match1.group(1)
+		title = match1.group(2)
+	elif match2:
+		for i in (1, 3):
+			if match2.group(i) == 'a':
+				author = match2.group(i + 1).strip()
+			elif match2.group(i) == 't':
+				title = match2.group(i + 1).strip()
+	if author is None or title is None:
+		asyncio.create_task(message.channel.send(err_invalid_cmd))
+		return
+	m = f'Looking up {title} by {author}.'
+	for site in site_modules:
+		m += f'\n{site.name}: Please wait...'
+	msg_sent = await asyncio.create_task(message.channel.send(m))
 
-# lc.run(token)
+lc.run(token)
