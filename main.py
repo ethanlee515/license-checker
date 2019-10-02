@@ -8,7 +8,7 @@ import functools
 import site_2D_Market
 import site_Comic_Bavel
 import site_Comic_Europa
-import site_HanaMan_Gold
+import site_Comic_HanaMan
 import site_Comic_Kairakuten
 import site_Comic_Kairakuten_Beast
 import site_Comic_Koh
@@ -21,7 +21,7 @@ import site_Project_Hentai
 import site_ENSHODO
 
 site_modules = [site_2D_Market, site_Comic_Bavel, site_Comic_Europa,
-	site_HanaMan_Gold, site_Comic_Kairakuten, site_Comic_Kairakuten_Beast,
+	site_Comic_HanaMan, site_Comic_Kairakuten, site_Comic_Kairakuten_Beast,
 	site_Comic_Koh, site_Comic_Shitsurakuten, site_Comic_XEros, site_Fakku,
 	site_Girls_forM, site_HanaMan_Gold, site_Project_Hentai, site_ENSHODO]
 
@@ -41,7 +41,8 @@ err_invalid_cmd = ("Invalid command. Usage: `.lc \"author\" \"title\"` "
 	"or `.lc -a author -t title`")
 
 async def edit_status(msg, name, status):
-	await msg.edit(content="PH")
+	await msg.edit(content=
+			re.sub(f'{name}:.*', f'{name}: {status}', msg.content))
 
 @lc.event
 async def on_message(message):
@@ -58,16 +59,22 @@ async def on_message(message):
 	elif match2:
 		for i in (1, 3):
 			if match2.group(i) == 'a':
-				author = match2.group(i + 1).strip()
+				author = match2.group(i + 1).strip().strip('"')
 			elif match2.group(i) == 't':
-				title = match2.group(i + 1).strip()
-	if author is None or title is None:
+				title = match2.group(i + 1).strip().strip('"')
+	if author is None or len(author) == 0 or title is None or len(title) == 0:
 		asyncio.create_task(message.channel.send(err_invalid_cmd))
 		return
-	msg_sent = await asyncio.create_task(message.channel.send(
+	msg = await asyncio.create_task(message.channel.send(
 		functools.reduce(
-			lambda msg, site: msg + f'\n{site.name}: Please wait...',
+			lambda m, site: m + f'\n{site.name}: Please wait...',
 			site_modules, f'Looking up {title} by {author}.')))
+	await asyncio.sleep(2)
+	await edit_status(msg, 'Comic Bavel', 'STATUS EDIT TEST')
+	await asyncio.sleep(2)
+	await edit_status(msg, 'Comic Hana-Man', 'STATUS EDIT TEST 2')
+	await asyncio.sleep(2)
+	await edit_status(msg, 'Comic Koh', 'STATUS EDIT TEST 3')
 
 @lc.event
 async def on_ready():
