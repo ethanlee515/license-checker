@@ -4,6 +4,7 @@ import sys
 import discord
 import asyncio
 import re
+import functools
 import site_2D_Market
 import site_Comic_Bavel
 import site_Comic_Europa
@@ -39,6 +40,9 @@ cmd_pattern2 = re.compile(r"\.lc\s+-(.)\s+(.+)\s+-(.)\s+(.+)$")
 err_invalid_cmd = ("Invalid command. Usage: `.lc \"author\" \"title\"` "
 	"or `.lc -a author -t title`")
 
+async def edit_status(msg, name, status):
+	await msg.edit(content="PH")
+
 @lc.event
 async def on_message(message):
 	if not cmd_prefix.match(message.content):
@@ -60,10 +64,10 @@ async def on_message(message):
 	if author is None or title is None:
 		asyncio.create_task(message.channel.send(err_invalid_cmd))
 		return
-	m = f'Looking up {title} by {author}.'
-	for site in site_modules:
-		m += f'\n{site.name}: Please wait...'
-	msg_sent = await asyncio.create_task(message.channel.send(m))
+	msg_sent = await asyncio.create_task(message.channel.send(
+		functools.reduce(
+			lambda msg, site: msg + f'\n{site.name}: Please wait...',
+			site_modules, f'Looking up {title} by {author}.')))
 
 @lc.event
 async def on_ready():
