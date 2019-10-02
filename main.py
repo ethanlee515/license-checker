@@ -4,6 +4,25 @@ import sys
 import discord
 import asyncio
 import re
+import site_2D_Market
+import site_Comic_Bavel
+import site_Comic_Europa
+import site_HanaMan_Gold
+import site_Comic_Kairakuten
+import site_Comic_Kairakuten_Beast
+import site_Comic_Koh
+import site_Comic_Shitsurakuten
+import site_Comic_XEros
+import site_Fakku
+import site_Girls_forM
+import site_HanaMan_Gold
+import site_Project_Hentai
+import site_ENSHODO
+
+site_modules = [site_2D_Market, site_Comic_Bavel, site_Comic_Europa,
+	site_HanaMan_Gold, site_Comic_Kairakuten, site_Comic_Kairakuten_Beast,
+	site_Comic_Koh, site_Comic_Shitsurakuten, site_Comic_XEros, site_Fakku,
+	site_Girls_forM, site_HanaMan_Gold, site_Project_Hentai, site_ENSHODO]
 
 try:
 	with open("bot-token.txt", "r") as token_file:
@@ -48,4 +67,4 @@ async def on_message(message):
 		else:
 			asyncio.create_task(message.channel.send(err_invalid_cmd))
 
-lc.run(token)
+# lc.run(token)
