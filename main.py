@@ -64,11 +64,11 @@ async def process_site(site, author, title, channel):
 
 @lc.event
 async def on_message(msg):
-	if not re.match(r"\.lc(:?\s+.*)?$", msg.content):
+	content = msg.content.strip().replace('“','"').replace('”','"')
+	if not re.match(r"\.lc(:?\s+.*)?$", content):
 		return
 	author = None
 	title = None
-	content = msg.content.strip().replace('“','"').replace('”','"')
 	match1 = re.match(r'\.lc\s+"([^"]+)"\s+"([^"]+)"$', content)
 	match2 = re.match(r"\.lc\s+-(.)\s+(.+)\s+-(.)\s+(.+)$", content)
 	if match1:
