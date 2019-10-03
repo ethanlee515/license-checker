@@ -5,6 +5,7 @@ import discord
 import asyncio
 import re
 import functools
+from similarity import compute_similarity
 import site_2D_Market
 import site_Comic_Bavel
 import site_Comic_Europa
@@ -40,6 +41,7 @@ cmd_pattern2 = re.compile(r"\.lc\s+-(.)\s+(.+)\s+-(.)\s+(.+)$")
 
 async def check_site(site, author, title):
 	# TODO
+	await asyncio.sleep(5)
 	raise NotImplementedError()
 	return "placeholder done status result"
 
