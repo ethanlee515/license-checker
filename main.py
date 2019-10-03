@@ -38,9 +38,21 @@ cmd_prefix = re.compile(r"\.lc(:?\s+.*)?$")
 cmd_pattern1 = re.compile(r'\.lc\s+"([^"]+)"\s+"([^"]+)"$')
 cmd_pattern2 = re.compile(r"\.lc\s+-(.)\s+(.+)\s+-(.)\s+(.+)$")
 
-async def edit_status(msg, name, status):
-	await msg.edit(content=
-			re.sub(f'{name}:.*', f'{name}: {status}', msg.content))
+async def check_site(site, author, title):
+	# TODO
+	raise NotImplementedError()
+	return "placeholder done status result"
+
+async def process_site(site, author, title, channel):
+	msg = await channel.send(f"{site.name}: Please wait...")
+	try:
+		status = await check_site(site, author, title)
+	except Exception as e:
+		if str(e):
+			status = f'{type(e).__name__} - {e}'
+		else:
+			status = type(e).__name__
+	await msg.edit(content=f"{site.name}: {status}")
 
 @lc.event
 async def on_message(message):
@@ -64,16 +76,9 @@ async def on_message(message):
 		asyncio.create_task(message.channel.send('Invalid command. '
 			'Usage: `.lc "author" "title"` or `.lc -a author -t title`'))
 		return
-	msg = await asyncio.create_task(message.channel.send(
-		functools.reduce(
-			lambda m, site: m + f'\n{site.name}: Please wait...',
-			site_modules, f'Looking up {title} by {author}.')))
-	await asyncio.sleep(2)
-	await edit_status(msg, 'Comic Bavel', 'STATUS EDIT TEST')
-	await asyncio.sleep(2)
-	await edit_status(msg, 'Comic Hana-Man', 'STATUS EDIT TEST 2')
-	await asyncio.sleep(2)
-	await edit_status(msg, 'Comic Koh', 'STATUS EDIT TEST 3')
+	await message.channel.send(f"Looking up {title} by {author}.")
+	for site in site_modules:
+		asyncio.create_task(process_site(site, author, title, message.channel))
 
 @lc.event
 async def on_ready():
