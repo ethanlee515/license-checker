@@ -55,10 +55,10 @@ async def process_site(site, author, title, channel):
 	await msg.edit(content=f"{site.name}: {status}")
 
 @lc.event
-async def on_message(message):
-	if not cmd_prefix.match(message.content):
+async def on_message(msg):
+	if not cmd_prefix.match(msg.content):
 		return
-	content = message.content.strip().replace('“','"').replace('”','"')
+	content = msg.content.strip().replace('“','"').replace('”','"')
 	author = None
 	title = None
 	match1 = cmd_pattern1.match(content)
@@ -73,12 +73,12 @@ async def on_message(message):
 			elif match2.group(i) == 't':
 				title = match2.group(i + 1).strip().strip('"')
 	if author is None or len(author) == 0 or title is None or len(title) == 0:
-		asyncio.create_task(message.channel.send('Invalid command. '
+		asyncio.create_task(msg.channel.send('Invalid command. '
 			'Usage: `.lc "author" "title"` or `.lc -a author -t title`'))
 		return
-	await message.channel.send(f"Looking up {title} by {author}.")
+	await msg.channel.send(f"Looking up {title} by {author}.")
 	for site in site_modules:
-		asyncio.create_task(process_site(site, author, title, message.channel))
+		asyncio.create_task(process_site(site, author, title, msg.channel))
 
 @lc.event
 async def on_ready():
