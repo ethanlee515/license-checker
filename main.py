@@ -6,7 +6,7 @@ import asyncio
 import re
 import functools
 from similarity import compute_similarity
-import site_test_debug
+# import site_test_debug
 import site_2D_Market
 import site_Comic_Bavel
 import site_Comic_Europa
@@ -22,7 +22,7 @@ import site_HanaMan_Gold
 import site_Project_Hentai
 import site_ENSHODO
 
-site_modules = [site_test_debug,
+site_modules = [ # site_test_debug,
 	site_2D_Market, site_Comic_Bavel, site_Comic_Europa,
 	site_Comic_HanaMan, site_Comic_Kairakuten, site_Comic_Kairakuten_Beast,
 	site_Comic_Koh, site_Comic_Shitsurakuten, site_Comic_XEros, site_Fakku,
@@ -37,36 +37,30 @@ except FileNotFoundError:
 
 lc = discord.Client()
 
-async def check_site(site, author, title):
-	matches = list()
-	similar = list()
-	titles = await site.get_manga_by_author(author)
-	for t in titles:
-		s = compute_similarity(title, t)
-		if s > .9:
-			matches.append(t)
-		elif s > .5:
-			similar.append(t)
-	status = ''
-	if len(matches) != 0:
-		status += f"Found {matches}. "
-	elif len(similar) != 0:
-		status += f"Possible matches {similar}. "
-	if status == '':
-		return "No matches"
-	else:
-		return status.strip()
-
 async def process_site(site, author, title, channel):
 	msg = await channel.send(f"{site.name}: Please wait...")
 	try:
-		status = await check_site(site, author, title)
+		matches = list()
+		similar = list()
+		titles = await site.get_manga_by_author(author)
+		for t in titles:
+			s = compute_similarity(title, t)
+			if s > .9:
+				matches.append(t)
+			elif s > .5:
+				similar.append(t)
+		status = ("No match found"
+				if len(matches) == 0 and len(similar) == 0 else "")
+		if len(matches) != 0:
+			status += f"Found match {matches}. "
+		elif len(similar) != 0:
+			status += f"Found possible match {similar}. "
 	except Exception as e:
 		if str(e):
 			status = f'{type(e).__name__} - {e}'
 		else:
 			status = type(e).__name__
-	await msg.edit(content=f"{site.name}: {status}")
+	await msg.edit(content=f"{site.name}: {status.strip()}")
 
 @lc.event
 async def on_message(msg):
