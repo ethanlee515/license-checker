@@ -35,10 +35,6 @@ except FileNotFoundError:
 
 lc = discord.Client()
 
-cmd_prefix = re.compile(r"\.lc(:?\s+.*)?$")
-cmd_pattern1 = re.compile(r'\.lc\s+"([^"]+)"\s+"([^"]+)"$')
-cmd_pattern2 = re.compile(r"\.lc\s+-(.)\s+(.+)\s+-(.)\s+(.+)$")
-
 async def check_site(site, author, title):
 	# TODO
 	await asyncio.sleep(5)
@@ -58,13 +54,13 @@ async def process_site(site, author, title, channel):
 
 @lc.event
 async def on_message(msg):
-	if not cmd_prefix.match(msg.content):
+	if not re.match(r"\.lc(:?\s+.*)?$", msg.content):
 		return
 	content = msg.content.strip().replace('“','"').replace('”','"')
 	author = None
 	title = None
-	match1 = cmd_pattern1.match(content)
-	match2 = cmd_pattern2.match(content)
+	match1 = re.match(r'\.lc\s+"([^"]+)"\s+"([^"]+)"$', content)
+	match2 = re.match(r"\.lc\s+-(.)\s+(.+)\s+-(.)\s+(.+)$", content)
 	if match1:
 		author = match1.group(1)
 		title = match1.group(2)
