@@ -17,19 +17,19 @@ Checks if a particular manga is licensed in English by looking it up on a given 
 * Execute `python3.7 main.py`
 * Give the Discord bot commands of the form `.lc "author" "title"` or `.lc -a author -t title`
 ## Sites and status
-* 2DMarket: **NYI**
-* Comic Bavel: **NYI**
-* Comic Europa: **NYI**
-* Comic Hana-Man: **NYI**
-* Comic Kairakuten: **NYI**
-* Comic Kairakuten Beast: **NYI**
-* Comic Koh: **NYI**
-* Comic Shitsurakuten: **NYI**
+* 2DMarket: **NYI** Requires site login to search
+* Comic Bavel: [Site](https://comicbavel.com/) has no English version.
+* Comic Europa: Can't find official site?
+* Comic Hana-Man: [Site](https://www.wani.com/product/03777/) has no English version.
+* Comic Kairakuten: Can't find official site?
+* Comic Kairakuten Beast: Can't find official site?
+* Comic Koh: Can't find official site?
+* Comic Shitsurakuten: Can't find official site?
 * Comic X-Eros: **NYI**
-* Fakku: **NYI**
-* Girls forM: **NYI**
+* Fakku: [Site]("https://www.fakku.net/"); work in progress.
+* Girls forM: Can't find official site?
 * Hana-Man Gold: **NYI**
-* Project Hentai: **NYI**
-* ENSHODO: **NYI**
+* Project Hentai: [Site](https://www.projecthentai.com/); work in progress.
+* ENSHODO: [Site](https://www.twipu.com/patinafinish/tweet/1167021110849703937) closed permanently
 ## Examples
 TODO
