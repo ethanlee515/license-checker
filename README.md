@@ -1,5 +1,5 @@
 # license-checker
-Checks if a particular manga is licensed in English by looking it up on a given set of sites.
+Checks if a particular manga is licensed in English by looking it up on a given set of sites. The user interface is a Discord bot.
 ## Dependencies
 * Python 3.7.3+
 * The libraries below
@@ -8,7 +8,9 @@ Checks if a particular manga is licensed in English by looking it up on a given 
 	* discord.py
 	* tensorflow
 ## Setup
-* Modify the top of `similarity.py` depending on your tensorflow version. (Pip3.7+ should download 2.0+ by default.)
+* Modify the top of `similarity.py` depending on your tensorflow version.
+	* To find out the version number, do `python3.7 -c "import tensorflow;print(tensorflow.__version__)"`
+	* Pip3.7+ should download 2.0+ by default.
 * Execute `python3.7 similarity.py` to download/cache the tensorflow module
 * Create bot-token.txt and put your token in there
 ## Running
