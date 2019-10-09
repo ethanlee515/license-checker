@@ -26,7 +26,7 @@ Checks if a particular manga is licensed in English by looking it up on a given 
 * Comic Koh: Can't find official site?
 * Comic Shitsurakuten: Published through [Wanimagazine](https://www.wani.com/) which has no English version.
 * Comic X-Eros: Published through [Wanimagazine](https://www.wani.com/) which has no English version.
-* [Fakku]("https://www.fakku.net/"): Work in progress.
+* [Fakku](https://www.fakku.net/): Work in progress.
 * Girls forM: Can't find official site?
 * Hana-Man Gold: Published through [Wanimagazine](https://www.wani.com/) which has no English version.
 * [Project Hentai](https://www.projecthentai.com/); work in progress.
