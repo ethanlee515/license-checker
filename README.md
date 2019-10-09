@@ -20,15 +20,15 @@ Checks if a particular manga is licensed in English by looking it up on a given 
 * [2DMarket](http://2d-market.com/): Works in progress. Requires site login to search.
 * [Comic Bavel](https://comicbavel.com/): No English version exists.
 * Comic Europa: Official site possibly [here](http://comicbavel.com/europa/)? No English versions though.
-* Comic Hana-Man: Can't find official site?
-* Comic Kairakuten: Can't find official site?
-* Comic Kairakuten Beast: Can't find official site?
+* Comic Hana-Man: Published through [Wanimagazine](https://www.wani.com/) which has no English version.
+* Comic Kairakuten: Published through [Wanimagazine](https://www.wani.com/) which has no English version.
+* Comic Kairakuten Beast: Published through [Wanimagazine](https://www.wani.com/) which has no English version.
 * Comic Koh: Can't find official site?
-* Comic Shitsurakuten: Can't find official site?
-* Comic X-Eros: **NYI**
+* Comic Shitsurakuten: Published through [Wanimagazine](https://www.wani.com/) which has no English version.
+* Comic X-Eros: Published through [Wanimagazine](https://www.wani.com/) which has no English version.
 * [Fakku]("https://www.fakku.net/"): Work in progress.
 * Girls forM: Can't find official site?
-* Hana-Man Gold: **NYI**
+* Hana-Man Gold: Published through [Wanimagazine](https://www.wani.com/) which has no English version.
 * [Project Hentai](https://www.projecthentai.com/); work in progress.
 * ENSHODO: Closed permanently. [Source](https://www.twipu.com/patinafinish/tweet/1167021110849703937)
 ## Examples
