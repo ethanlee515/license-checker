@@ -4,11 +4,15 @@ Checks if a particular manga is licensed in English by looking it up on a given 
 * Python 3.7.3+
 * The libraries below
 	* BeautifulSoup
+	* numpy
 	* discord.py
-	* nltk
-## How to run
+	* tensorflow
+## Setup
+* Modify the top of `similarity.py` depending on your tensorflow version. (Pip3.7+ should download 2.0+ by default.)
+* Execute `python3.7 similarity.py` to download/cache the tensorflow module
 * Create bot-token.txt and put your token in there
-* `python3.7 main.py` or simply `./main.py`
+## Running
+* Execute `python3.7 main.py`
 * Give the Discord bot commands of the form `.lc "author" "title"` or `.lc -a author -t title`
 ## Sites and status
 * 2DMarket: **NYI**
