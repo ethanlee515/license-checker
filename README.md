@@ -3,9 +3,10 @@ Checks if a particular manga is licensed in English by looking it up on a given 
 ## Dependencies
 * Python 3.7.3+
 * The libraries below
-	* BeautifulSoup
+	* beautifulsoup4
 	* numpy
 	* discord.py
+	* requests (should be automatically downloaded with discord.py)
 	* tensorflow
 ## Setup
 * Modify the top of `similarity.py` depending on your tensorflow version.
