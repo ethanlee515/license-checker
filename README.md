@@ -1,13 +1,15 @@
 # license-checker
 Checks if a particular manga is licensed in English by looking it up on a given set of sites. The user interface is a Discord bot.
 ## Dependencies
-* Python 3.7.3+
-* The libraries below
-	* beautifulsoup4
+* Python 3.7.3+ with libraries below
 	* numpy
 	* discord.py
-	* requests (should be automatically downloaded with discord.py)
 	* tensorflow
+	* selenium
+	* requests (should come with discord.py)
+	* beautifulsoup4
+* Firefox
+* [geckodriver](https://github.com/mozilla/geckodriver/releases)
 ## Setup
 * Modify the top of `similarity.py` depending on your tensorflow version.
 	* To find out the version number, do `python3.7 -c "import tensorflow;print(tensorflow.__version__)"`
