@@ -3,3 +3,5 @@ bot-token.txt
 __pycache__/
 *.py[cod]
 *$py.class
+# log file from geckodriver
+*.log
