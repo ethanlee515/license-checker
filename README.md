@@ -6,18 +6,17 @@ Checks if a particular manga is licensed in English by looking it up on a given 
 	* discord.py
 	* tensorflow
 	* selenium
-	* requests (should come with discord.py)
+	* requests (should come with discord.py) TODO check if this is actually used anymore
+	* aiohttp (probably come with discord.py?)
 	* beautifulsoup4
 * Firefox
 * [geckodriver](https://github.com/mozilla/geckodriver/releases)
 ## Setup
-* Modify the top of `similarity.py` depending on your tensorflow version.
-	* To find out the version number, do `python3.7 -c "import tensorflow;print(tensorflow.__version__)"`
-	* Pip3.7+ should download 2.0+ by default.
-* Execute `python3.7 similarity.py` to download/cache the tensorflow module
+* Replace the `python3.7` in the first lines of similarity.py and main.py with whatever your python command is
+* Execute `./similarity.py < test_sim.txt` to cache and test the tensorflow module (might take a while to download)
 * Create bot-token.txt and put your token in there
 ## Running
-* Execute `python3.7 main.py`
+* Execute `./main.py`
 * Give the Discord bot commands of the form `.lc "author" "title"` or `.lc -a author -t title`
 ## Sites and status
 * [2DMarket](http://2d-market.com/): Works in progress. Requires site login to search.
