@@ -80,6 +80,8 @@ async def recv_sim_calc():
 		msg = m["message"]
 		site = m["site"]
 		await msg.edit(content=f"{site}: {line.decode('utf-8')}")
+		# TODO delete message id from above json
+		# TODO del from pending_msgs
 
 @lc.event
 async def on_ready():
