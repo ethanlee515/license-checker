@@ -43,6 +43,7 @@ async def process_site(site, author, title, channel):
 			status = f'{type(e).__name__} - {e}'
 		else:
 			status = type(e).__name__
+		await msg.edit(content=f"{site.name}: {status.strip()}")
 
 @lc.event
 async def on_message(msg):
