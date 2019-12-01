@@ -5,11 +5,13 @@ import discord
 import asyncio
 import re
 import functools
-from similarity import compute_similarity
+# from similarity import compute_similarity
 # import site_test_debug
 import site_2D_Market
 import site_Fakku
 import site_Project_Hentai
+import json
+import traceback
 
 site_modules = [site_2D_Market, site_Fakku, site_Project_Hentai]
 # site_modules.append(site_test_debug)
@@ -21,32 +23,26 @@ except FileNotFoundError:
 	print("Cannot open bot-token.txt", file=sys.stderr)
 	exit(1)
 
+# TODO Consider refactoring bot into a class to eliminate globals
 lc = discord.Client()
 
+pending_msgs = dict()
+sim_calc = None
+
 async def process_site(site, author, title, channel):
-	msg = await channel.send(f"{site.name}: Please wait...")
+	msg = await channel.send(f"{site.name}: fetching titles...")
 	try:
-		matches = list()
-		similar = list()
 		titles = await site.get_manga_by_author(author)
-		for t in titles:
-			s = compute_similarity(title, t)
-			if s > .9:
-				matches.append(t)
-			elif s > .5:
-				similar.append(t)
-		status = ("No match found"
-				if len(matches) == 0 and len(similar) == 0 else "")
-		if len(matches) != 0:
-			status += f"Found match {matches}. "
-		elif len(similar) != 0:
-			status += f"Found possible match {similar}. "
+		await msg.edit(content=f"{site.name}: comparing titles...")
+		pending_msgs[msg.id] = {"message": msg, "site": site.name}
+		req = {"title": title, "titles": titles, "message_id": msg.id}
+		sim_calc.stdin.write((json.dumps(req) + '\n').encode('utf-8'))
 	except Exception as e:
+		traceback.print_exc()
 		if str(e):
 			status = f'{type(e).__name__} - {e}'
 		else:
 			status = type(e).__name__
-	await msg.edit(content=f"{site.name}: {status.strip()}")
 
 @lc.event
 async def on_message(msg):
@@ -74,8 +70,35 @@ async def on_message(msg):
 	for site in site_modules:
 		asyncio.create_task(process_site(site, author, title, msg.channel))
 
+async def recv_sim_calc():
+	global pending_msgs
+	while True:
+		line = await sim_calc.stdout.readline()
+		results = json.loads(line)
+		m = pending_msgs[results["message_id"]]
+		msg = m["message"]
+		site = m["site"]
+		await msg.edit(content=f"{site}: {line.decode('utf-8')}")
+
 @lc.event
 async def on_ready():
 	print("bot is running...")
 
-lc.run(token)
+async def main():
+	print("starting subprocess")
+	global sim_calc
+	sim_calc = await asyncio.create_subprocess_exec(
+			"./similarity.py",
+			stdin=asyncio.subprocess.PIPE,
+			stdout=asyncio.subprocess.PIPE,
+			stderr=asyncio.subprocess.DEVNULL)
+	print("subprocess started")
+	# Read the "alive" message
+	print((await sim_calc.stdout.readline()).decode('utf-8').strip())
+	# Read the "ready" message
+	print((await sim_calc.stdout.readline()).decode('utf-8').strip())
+
+	asyncio.create_task(recv_sim_calc())
+	await lc.start(token)
+
+lc.loop.run_until_complete(main())

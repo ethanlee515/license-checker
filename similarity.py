@@ -1,5 +1,7 @@
 #!/usr/bin/env python3.7
 
+print("loading tensorflow", flush=True)
+
 import tensorflow as tf
 import tensorflow_hub as hub
 import numpy as np
@@ -12,7 +14,7 @@ sess = tf.compat.v1.Session()
 sess.run(tf.compat.v1.global_variables_initializer())
 sess.run(tf.compat.v1.tables_initializer())
 
-print("Tensorflow ready")
+print("Tensorflow ready", flush=True)
 
 def find_matches(title, titles):
 	titles.append(title)
@@ -31,4 +33,4 @@ for line in sys.stdin:
 	req = json.loads(line)
 	output = find_matches(req["title"], req["titles"])
 	output["message_id"] = req["message_id"]
-	print(json.dumps(output))
+	print(json.dumps(output), flush=True)
