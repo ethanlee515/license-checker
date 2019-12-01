@@ -29,4 +29,6 @@ def find_matches(title, titles):
 
 for line in sys.stdin:
 	req = json.loads(line)
-	print(json.dumps(find_matches(req["title"], req["titles"])))
+	output = find_matches(req["title"], req["titles"])
+	output["message_id"] = req["message_id"]
+	print(json.dumps(output))
