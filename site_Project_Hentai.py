@@ -12,6 +12,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 
 async def get_manga_by_author(author):
+	raise NotImplementedError()
 	options = Options()
 	options.headless = True
 	driver = webdriver.Firefox(options=options)
