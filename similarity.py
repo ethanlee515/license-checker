@@ -1,19 +1,12 @@
 #!/usr/bin/env python3.7
 
-print("Loading Tensorflow...")
-# IF using tensorflow 2.0+
-# import tensorflow.compat.v1 as tf
-# tf.disable_v2_behavior()
-# ELSE
 import tensorflow as tf
-# ENDIF
-
 import tensorflow_hub as hub
 import numpy as np
 
-print("Loading Tensorflow module...")
 embed = hub.KerasLayer("https://tfhub.dev/google/universal-sentence-encoder/3")
-print("Tensorflow module loaded")
+
+print("Tensorflow ready")
 
 session = tf.compat.v1.Session()
 session.run(tf.compat.v1.global_variables_initializer())
