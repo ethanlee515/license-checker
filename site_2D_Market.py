@@ -2,21 +2,24 @@
 
 import sys
 import asyncio
+import urllib
 
 name = "2D Market"
 async def get_manga_by_author(author):
-	proc = await asyncio.create_subprocess_exec(
-			"./2D_Market.py",
-			author,
-			stdout=asyncio.subprocess.PIPE)
-	await proc.wait()
-	results = list()
-	while True:
-		line = (await proc.stdout.readline()).decode().strip()
-		if len(line) == 0:
-			break
-		results.append(line)
-	return results
+	raise NotImplementedError
+	async with aiohttp.ClientSession() as session:
+		resp = await session.get(
+				'https://2d-market.com/Search?search_value=' +
+				urllib.parse.quote_plus(author) +
+				'&type=author')
+		text = await resp.text()
+		soup = BeautifulSoup(text, 'html.parser')
+		# authors = 
+
+
+
+	
+
 	
 
 if __name__ == "__main__":
