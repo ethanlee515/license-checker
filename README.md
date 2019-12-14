@@ -1,5 +1,6 @@
 # license-checker
 Checks if a particular manga is licensed in English by looking it up on a given set of sites. The user interface is a Discord bot.
+Built for the [r/wholesomehentai](https://reddit.com/r/wholesomehentai) subreddit.
 ## Dependencies
 * Python 3.7.3+ with libraries below
 	* numpy
