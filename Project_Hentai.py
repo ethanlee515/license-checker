@@ -1,58 +1,44 @@
 #!/usr/bin/env python3.7
+
 import sys
-
-if len(sys.argv) != 2:
-	print('usage: python3 Project_Hentai.py "author name"')
-	exit(1)
-
-author = sys.argv[1]
-
-
-'''
-#!/usr/bin/env python3.7
-name = "Project Hentai"
-
 import re
-import sys
-import asyncio
-import requests
-
 from selenium import webdriver
 from selenium.webdriver.firefox.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
+from selenium.common.exceptions import NoSuchElementException
 
-async def get_manga_by_author(author):
-	raise NotImplementedError()
-	options = Options()
-	options.headless = True
-	driver = webdriver.Firefox(options=options)
-	driver.implicitly_wait(10)
-	driver.get('https://www.projecthentai.com')
-	results = list()
-	driver.find_element_by_css_selector(
-			'//iframe//.ecwid-search-widget__input') \
-			.send_keys(author, Keys.ENTER)
-	url = driver.getCurrentUrl()
+if len(sys.argv) != 2:
+	print('usage: python3 Project_Hentai.py "author name"')
+	exit(1)
+author = sys.argv[1]
 
-	
+options = Options()
+options.headless = True
+driver = webdriver.Firefox(options=options)
+driver.implicitly_wait(10)
+driver.get('https://www.projecthentai.com')
+frames = driver.find_elements_by_tag_name('iframe')
+for frame in frames:
+	driver.switch_to.default_content()
+	driver.switch_to.frame(frame)
+	try:
+		search_elem = driver.find_element_by_class_name('ecwid-search-widget__input')
+		search.elem = send_keys(author, Keys.ENTER)
+		break
+	except NoSuchElementException:
+		continue
 
+# TODO Now we should be at the search results page
 
+driver.switch_to.default_content()
 
-	# TODO The above doesn't work because of iframe shenanigans
-	soup = BeautifulSoup(site, 'html.parser')
-	results_count = int(re.search(r"of (\d+) items",
-		soup.find(class_='pager__count-pages')).group(1))
+res_count_elem = driver.find_element_by_class_name('pager__count-pages')
 
-	driver.quit()
+# TODO get element text
 
-	return url
-	
-	# params += '&offset=60'
+res_count = int(re.search(r"of (\d+) items", res_count_elem_text).group(1))
 
-if __name__ == "__main__":
-	if len(sys.argv) != 2:
-		print('usage: python3 site_Project_Hentai.py "author name"')
-		exit(1)
-	print(asyncio.run(get_manga_by_author(sys.argv[1])))
-'''
+# TODO What is this? params += '&offset=60'
+
+# TODO what? url = driver.getCurrentUrl()
