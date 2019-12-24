@@ -13,17 +13,23 @@ if len(sys.argv) != 2:
 	exit(1)
 author = sys.argv[1]
 
+print('starting firefox', file=sys.stderr)
+
 options = Options()
 options.headless = True
 driver = webdriver.Firefox(options=options)
-driver.implicitly_wait(10)
+# driver = webdriver.Firefox()
+
+print('started firefox', file=sys.stderr)
+
 driver.get('https://www.projecthentai.com')
 frames = driver.find_elements_by_tag_name('iframe')
 for frame in frames:
 	driver.switch_to.default_content()
 	driver.switch_to.frame(frame)
 	try:
-		search_elem = driver.find_element_by_class_name('ecwid-search-widget__input')
+		search_elem = driver.find_element_by_class_name(
+				'ecwid-search-widget__input')
 		search.elem = send_keys(author, Keys.ENTER)
 		break
 	except NoSuchElementException:
@@ -31,13 +37,19 @@ for frame in frames:
 
 # TODO Now we should be at the search results page
 
+results = list()
+
 driver.switch_to.default_content()
 
-res_count_elem = driver.find_element_by_class_name('pager__count-pages')
+prods = find_elements_by_css_selector('.grid-product__title-inner')
+
+print(len(prods))
+
+# res_count_elem = driver.find_element_by_class_name('pager__count-pages')
 
 # TODO get element text
 
-res_count = int(re.search(r"of (\d+) items", res_count_elem_text).group(1))
+# res_count = int(re.search(r"of (\d+) items", res_count_elem_text).group(1))
 
 # TODO What is this? params += '&offset=60'
 
