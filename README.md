@@ -6,6 +6,7 @@ Built for the [r/wholesomehentai](https://reddit.com/r/wholesomehentai) subreddi
 	* numpy
 	* discord.py
 	* tensorflow
+	* tensorflow-hub
 	* selenium
 	* requests (should come with discord.py) TODO check if this is actually used anymore
 	* aiohttp (probably come with discord.py?)
