@@ -5,3 +5,4 @@ __pycache__/
 *$py.class
 # log file from geckodriver
 *.log
+.vs
