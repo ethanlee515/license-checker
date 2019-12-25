@@ -8,24 +8,20 @@ import numpy as np
 import sys
 import json
 
-embed = hub.load("https://tfhub.dev/google/universal-sentence-encoder/3")
-
-sess = tf.compat.v1.Session()
-sess.run(tf.compat.v1.global_variables_initializer())
-sess.run(tf.compat.v1.tables_initializer())
+embed = hub.load("https://tfhub.dev/google/universal-sentence-encoder/4")
 
 print("Tensorflow ready", flush=True)
 
 def find_matches(title, titles):
 	titles.append(title)
-	vecs = embed(titles)["outputs"].eval(session=sess)
+	vecs = embed(titles) # ["outputs"].eval(session=sess)
 	matches = list()
 	near_matches = list()
 	for i in range(len(vecs) - 1):
 		similarity = np.inner(vecs[i], vecs[-1])
-		if similarity > .9:
+		if similarity > .75:
 			matches.append(titles[i])
-		elif similarity > .5:
+		elif similarity > .4:
 			near_matches.append(titles[i])
 	return {"matches": matches, "near_matches": near_matches}
 
