@@ -1,6 +1,6 @@
 # license-checker
-Checks if a particular manga is licensed in English by looking it up on a given set of sites. The user interface is a Discord bot.
-Built for the [r/wholesomehentai](https://reddit.com/r/wholesomehentai) subreddit.
+Checks if a particular manga is licensed in English by looking it up on a given set of sites.
+Built for the [r/wholesomehentai](https://reddit.com/r/wholesomehentai) subreddit and its associated Discord server.
 ## Dependencies
 * Python 3.7.3+ with libraries below
 	* numpy
@@ -14,9 +14,10 @@ Built for the [r/wholesomehentai](https://reddit.com/r/wholesomehentai) subreddi
 * Firefox
 * [geckodriver](https://github.com/mozilla/geckodriver/releases)
 ## Setup
-* Replace the `python3.7` in the first lines of similarity.py and main.py with whatever your python command is
+* Ensure that the command `python3.7` in fact points to Python 3.7.3+
 * Execute `./similarity.py < test_sim.txt` to cache and test the tensorflow module (might take a while to download)
 * Create bot-token.txt and put your token in there
+* Run `./Project_Hentai.py girl` to test your selenium installation
 ## Running
 * Execute `./main.py`
 * Give the Discord bot commands of the form `.lc "author" "title"` or `.lc -a author -t title`
