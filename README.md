@@ -2,7 +2,7 @@
 Checks if a particular manga is licensed in English by looking it up on a given set of sites.
 Built for the [r/wholesomehentai](https://reddit.com/r/wholesomehentai) subreddit and its associated Discord server.
 ## Dependencies
-* Python 3.7.3+ with libraries below
+* Python 3.7 with libraries below
 	* numpy
 	* discord.py
 	* tensorflow
@@ -17,12 +17,12 @@ Built for the [r/wholesomehentai](https://reddit.com/r/wholesomehentai) subreddi
 * Ensure that the command `python3.7` in fact points to Python 3.7.3+
 * Execute `./similarity.py < test_sim.txt` to cache and test the tensorflow module (might take a while to download)
 * Create bot-token.txt and put your token in there
-* Run `./Project_Hentai.py girl` to test your selenium installation
+* Run `./Project_Hentai.py girl` to test your selenium installation. This should pull up all the results when you search "girl" on Project Hentai.
 ## Running
 * Execute `./main.py`
 * Give the Discord bot commands of the form `.lc "author" "title"` or `.lc -a author -t title`
 ## Sites and status
-* [2DMarket](http://2d-market.com/): Works in progress. Requires site login to search.
+* [2DMarket](http://2d-market.com/): Done!
 * [Comic Bavel](https://comicbavel.com/): No English version exists.
 * Comic Europa: Official site possibly [here](http://comicbavel.com/europa/)? No English versions though.
 * Comic Hana-Man: Published through [Wanimagazine](https://www.wani.com/) which has no English site.
@@ -31,10 +31,8 @@ Built for the [r/wholesomehentai](https://reddit.com/r/wholesomehentai) subreddi
 * Comic Koh: Can't find official site?
 * Comic Shitsurakuten: Published through [Wanimagazine](https://www.wani.com/) which has no English site.
 * Comic X-Eros: Published through [Wanimagazine](https://www.wani.com/) which has no English site.
-* [Fakku](https://www.fakku.net/): Work in progress.
+* [Fakku](https://www.fakku.net/): Done!
 * Girls forM: Can't find official site?
 * Hana-Man Gold: Published through [Wanimagazine](https://www.wani.com/) which has no English site.
-* [Project Hentai](https://www.projecthentai.com/); work in progress.
+* [Project Hentai](https://www.projecthentai.com/): Done!
 * ENSHODO: Closed permanently. [Source](https://www.twipu.com/patinafinish/tweet/1167021110849703937)
-## Examples
-TODO
