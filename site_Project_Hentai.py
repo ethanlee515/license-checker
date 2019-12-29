@@ -6,7 +6,7 @@ import asyncio
 name = "Project Hentai"
 async def get_manga_by_author(author):
 	proc = await asyncio.create_subprocess_exec(
-			"./2D_Market.py",
+			"./site_Project_Hentai.py",
 			author,
 			stdout=asyncio.subprocess.PIPE)
 	await proc.wait()
@@ -21,6 +21,6 @@ async def get_manga_by_author(author):
 
 if __name__ == "__main__":
 	if len(sys.argv) != 2:
-		print('usage: python3.7 site_2D_Market.py "author name"')
+		print('usage: python3.7 Project_Hentai.py "author name"')
 		exit(1)
 	print(asyncio.run(get_manga_by_author(sys.argv[1])))

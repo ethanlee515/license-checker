@@ -2,6 +2,8 @@
 
 import sys
 import re
+from itertools import count
+from time import sleep
 from selenium import webdriver
 from selenium.webdriver.firefox.options import Options
 from selenium.webdriver.common.by import By
@@ -13,44 +15,59 @@ if len(sys.argv) != 2:
 	exit(1)
 author = sys.argv[1]
 
-print('starting firefox', file=sys.stderr)
-
 options = Options()
 options.headless = True
 driver = webdriver.Firefox(options=options)
-# driver = webdriver.Firefox()
 
-print('started firefox', file=sys.stderr)
+def build_url(query, page):
+	if page == 1:
+		return ('https://www.projecthentai.com/online-store/hex%3A' + 
+		  f'search?keyword={query}'.encode().hex())
+	else:
+		return ('https://www.projecthentai.com/online-store/hex%3A' +
+		  f'search?keyword={query}&offset={(page - 1) * 60}'.encode().hex())
 
-driver.get('https://www.projecthentai.com')
-frames = driver.find_elements_by_tag_name('iframe')
-for frame in frames:
+def switch_to_results_frame():
 	driver.switch_to.default_content()
-	driver.switch_to.frame(frame)
-	try:
-		search_elem = driver.find_element_by_class_name(
-				'ecwid-search-widget__input')
-		search.elem = send_keys(author, Keys.ENTER)
-		break
-	except NoSuchElementException:
-		continue
+	frames = driver.find_elements_by_tag_name('iframe')
+	for frame in frames:
+			driver.switch_to.default_content()
+			driver.switch_to.frame(frame)
+			try:
+				search_elem = driver.find_element_by_class_name(
+					'ecwid-productBrowser-SearchPage')
+				return True
+			except NoSuchElementException:
+				pass
+	return False
 
-# TODO Now we should be at the search results page
+for page in count(1):
+	driver.switch_to.default_content()
+	driver.get(build_url(author, page))
+	for attempt in range(20):
+		if switch_to_results_frame():
+			break
+		else:
+			sleep(0.5)
+	else:
+		print('products iframe not found', file=sys.stderr)
+		exit(1)
 
-results = list()
-
-driver.switch_to.default_content()
-
-prods = find_elements_by_css_selector('.grid-product__title-inner')
-
-print(len(prods))
-
-# res_count_elem = driver.find_element_by_class_name('pager__count-pages')
-
-# TODO get element text
-
-# res_count = int(re.search(r"of (\d+) items", res_count_elem_text).group(1))
-
-# TODO What is this? params += '&offset=60'
-
-# TODO what? url = driver.getCurrentUrl()
+	for attempt in range(20):
+		try:
+			driver.find_element_by_class_name('grid-product__title-inner')
+			# TODO if no results found, exit sooner
+			break
+		except NoSuchElementException:
+			sleep(0.5)
+	else:
+		print('no results found', file=sys.stderr)
+		exit(0)
+	prods = driver.find_elements_by_class_name('grid-product__title-inner')
+	for product in prods:
+		print(product.get_attribute('innerHTML'))
+	res_count_elem = driver.find_element_by_class_name('pager__count-pages')
+	res_count_elem_text = res_count_elem.get_attribute('innerHTML')
+	res_count = int(re.search(r"of (\d+) items", res_count_elem_text).group(1))
+	if page * 60 >= res_count:
+		break	
