@@ -8,7 +8,6 @@ Built for the [r/wholesomehentai](https://reddit.com/r/wholesomehentai) subreddi
 	* tensorflow
 	* tensorflow-hub
 	* selenium
-	* requests (should come with discord.py) TODO check if this is actually used anymore
 	* aiohttp (probably come with discord.py?)
 	* beautifulsoup4
 * Firefox

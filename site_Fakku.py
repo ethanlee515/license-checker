@@ -1,6 +1,5 @@
 #!/usr/bin/env python3.7
 
-import requests
 import sys
 import asyncio
 import aiohttp
