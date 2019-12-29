@@ -15,9 +15,9 @@ Built for the [r/wholesomehentai](https://reddit.com/r/wholesomehentai) subreddi
 * [geckodriver](https://github.com/mozilla/geckodriver/releases)
 ## Setup
 * Ensure that the command `python3.7` in fact points to Python 3.7
-* Execute `./similarity.py < test_sim.txt` to cache and test the tensorflow module (might take a while to download). First test compares `"apple"` with `["apples", "orange", "bananas"]`, which should return "apples". Second test compares `"cake"` with `["pancakes", "tiramisu", "bread"]`, which should produce near-matches.
+* Execute `./similarity.py < test_sim.txt` to cache and test the TensorFlow module (might take a while to download). First test compares `"apple"` with `["apples", "orange", "bananas"]`, which should return "apples". Second test compares `"cake"` with `["pancakes", "tiramisu", "bread"]`, which should produce near-matches.
 * Create bot-token.txt and put your token in there
-* Run `./Project_Hentai.py girl` to test your selenium installation. This should pull up all the results when you search "girl" on Project Hentai.
+* Run `./Project_Hentai.py girl` to test your selenium installation. This should pull up the search results for "girl" from Project Hentai.
 ## Running
 * Execute `./main.py`
 * Give the Discord bot commands of the form `.lc "author" "title"` or `.lc -a author -t title`
