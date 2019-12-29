@@ -55,8 +55,12 @@ for page in count(1):
 
 	for attempt in range(20):
 		try:
+			try:
+				driver.find_element_by_class_name('search__notice')
+				exit(0)
+			except NoSuchElementException:
+				pass
 			driver.find_element_by_class_name('grid-product__title-inner')
-			# TODO if no results found, exit sooner
 			break
 		except NoSuchElementException:
 			sleep(0.5)
