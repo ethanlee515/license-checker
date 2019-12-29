@@ -5,8 +5,6 @@ import discord
 import asyncio
 import re
 import functools
-# from similarity import compute_similarity
-# import site_test_debug
 import site_2D_Market
 import site_Fakku
 import site_Project_Hentai
@@ -14,7 +12,6 @@ import json
 import traceback
 
 site_modules = [site_2D_Market, site_Fakku, site_Project_Hentai]
-# site_modules.append(site_test_debug)
 
 try:
 	with open("bot-token.txt", "r") as token_file:
