@@ -73,12 +73,13 @@ async def recv_sim_calc():
 	while True:
 		line = await sim_calc.stdout.readline()
 		results = json.loads(line)
-		m = pending_msgs[results["message_id"]]
+		msg_id = results["message_id"]
+		del results["message_id"]
+		m = pending_msgs[msg_id]
+		del pending_msgs[msg_id]
 		msg = m["message"]
 		site = m["site"]
-		await msg.edit(content=f"{site}: {line.decode('utf-8')}")
-		# TODO delete message id from above json
-		# TODO del from pending_msgs
+		await msg.edit(content=f"{site}: {json.dumps(results)}")
 
 @lc.event
 async def on_ready():
