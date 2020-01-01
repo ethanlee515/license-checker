@@ -2,19 +2,12 @@
 Checks if a particular manga is licensed in English by looking it up on a given set of sites.
 Built for the [r/wholesomehentai](https://reddit.com/r/wholesomehentai) subreddit and its associated Discord server.
 ## Dependencies
-* Python 3.7 with libraries below
-	* numpy
-	* discord.py
-	* tensorflow
-	* tensorflow-hub
-	* selenium
-	* requests (should come with discord.py) TODO check if this is actually used anymore
-	* aiohttp (probably come with discord.py?)
-	* beautifulsoup4
+* Python 3.7
 * Firefox
 * [geckodriver](https://github.com/mozilla/geckodriver/releases)
 ## Setup
 * Ensure that the command `python3.7` in fact points to Python 3.7.3+
+* Execute `pip install -r dependencies.txt`
 * Execute `./similarity.py < test_sim.txt` to cache and test the tensorflow module (might take a while to download)
 * Create bot-token.txt and put your token in there
 * Run `./Project_Hentai.py girl` to test your selenium installation. This should pull up all the results when you search "girl" on Project Hentai.
