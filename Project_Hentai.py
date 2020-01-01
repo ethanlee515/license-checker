@@ -70,7 +70,11 @@ for page in count(1):
 	prods = driver.find_elements_by_class_name('grid-product__title-inner')
 	for product in prods:
 		print(product.get_attribute('innerHTML'))
-	res_count_elem = driver.find_element_by_class_name('pager__count-pages')
+	try:
+		res_count_elem = driver.find_element_by_class_name(
+				'pager__count-pages')
+	except:
+		break
 	res_count_elem_text = res_count_elem.get_attribute('innerHTML')
 	res_count = int(re.search(r"of (\d+) items", res_count_elem_text).group(1))
 	if page * 60 >= res_count:
