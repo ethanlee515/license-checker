@@ -3,7 +3,6 @@ discord.py
 tensorflow
 tensorflow-hub
 selenium
-requests (should come with discord.py) TODO check if this is actually used anymore
-aiohttp (probably come with discord.py?)
+aiohttp
 beautifulsoup4
 tensorflow_text>=2.0.0rc0
