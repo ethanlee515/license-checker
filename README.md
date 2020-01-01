@@ -2,7 +2,7 @@
 Checks if a particular manga is licensed in English by looking it up on a given set of sites.
 Built for the [r/wholesomehentai](https://reddit.com/r/wholesomehentai) subreddit and its associated Discord server.
 ## Dependencies
-* Python 3.7
+* Python 3.7 with pip 19.0+
 * Firefox
 * [geckodriver](https://github.com/mozilla/geckodriver/releases)
 ## Setup

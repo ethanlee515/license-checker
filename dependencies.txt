@@ -1,8 +1,8 @@
 numpy
 discord.py
+tensorflow_text>=2.0.0rc0
 tensorflow
 tensorflow-hub
 selenium
 aiohttp
 beautifulsoup4
-tensorflow_text>=2.0.0rc0

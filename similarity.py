@@ -4,6 +4,7 @@ print("loading tensorflow", flush=True)
 
 import tensorflow as tf
 import tensorflow_hub as hub
+import tensorflow_text
 import numpy as np
 import sys
 import json
