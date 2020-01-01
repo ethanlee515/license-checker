@@ -7,7 +7,7 @@ Built for the [r/wholesomehentai](https://reddit.com/r/wholesomehentai) subreddi
 * [geckodriver](https://github.com/mozilla/geckodriver/releases)
 ## Setup
 * Ensure that the command `python3.7` in fact points to Python 3.7
-* Execute `pip install -r dependencies.txt`
+* Execute `python3.7 -m pip install -r dependencies.txt`
 * Execute `./similarity.py < test_sim.txt` to cache and test the tensorflow module (might take a while to download)
 * Create bot-token.txt and put your token in there
 * Run `./Project_Hentai.py girl` to test your selenium installation. This should pull up the search results for "girl" from Project Hentai.
