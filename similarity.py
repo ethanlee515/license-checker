@@ -8,7 +8,7 @@ import numpy as np
 import sys
 import json
 
-embed = hub.load("https://tfhub.dev/google/universal-sentence-encoder/4")
+embed = hub.load("https://tfhub.dev/google/universal-sentence-encoder-multilingual/3")
 
 print("Tensorflow ready", flush=True)
 
