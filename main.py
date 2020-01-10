@@ -70,7 +70,8 @@ async def on_message(msg):
 				title = match2.group(i + 1).strip().strip('"')
 	if author is None or len(author) == 0 or title is None or len(title) == 0:
 		asyncio.create_task(
-			msg.channel.send('Invalid command. Usage: `.lc "author" "title"` or `.lc -a author -t title`'))
+			msg.channel.send('Invalid command. Usage: `.lc "author" "title"`'
+				' or `.lc -a author -t title`'))
 		return
 	await msg.channel.send(f"Looking up {title} by {author}.")
 	for site in site_modules:
