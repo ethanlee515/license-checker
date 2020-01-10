@@ -8,12 +8,14 @@ import itertools
 from bs4 import BeautifulSoup
 
 name = "2D Market"
+
+
 async def get_manga_by_author(author):
 	async with aiohttp.ClientSession() as session:
 		resp = await session.get(
-				'https://2d-market.com/Search?search_value=' +
-				urllib.parse.quote_plus(author) +
-				'&type=author')
+			'https://2d-market.com/Search?search_value=' +
+			urllib.parse.quote_plus(author) +
+			'&type=author')
 		page = await resp.text()
 		soup = BeautifulSoup(page, 'html.parser')
 		author_link_tags = soup.select('.showcase_author_name h1 a')
@@ -23,17 +25,17 @@ async def get_manga_by_author(author):
 		for author_link in author_links:
 			for page_num in itertools.count(1):
 				resp = await session.get(
-						f'https://2d-market.com{author_link}?page={page_num}')
+					f'https://2d-market.com{author_link}?page={page_num}')
 				page = await resp.text()
 				soup = BeautifulSoup(page, 'html.parser')
 				elements = soup.select(
-						'.showcase_comics_product_info hgroup h1 a')
+					'.showcase_comics_product_info hgroup h1 a')
 				if len(elements) == 0:
 					break
 				for element in elements:
 					results.append(element.decode_contents())
 		return results
-	
+
 
 if __name__ == "__main__":
 	if len(sys.argv) != 2:
