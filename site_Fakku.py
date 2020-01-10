@@ -6,6 +6,8 @@ import aiohttp
 from bs4 import BeautifulSoup
 
 name = "Fakku"
+
+
 async def get_manga_by_author(author):
 	results = list()
 	page = 1
@@ -22,12 +24,15 @@ async def get_manga_by_author(author):
 			raise Exception("Interrupted somehow")
 		return results
 
+
 def build_url(author, page):
 	return f'http://fakku.net/search/{author}/page/{page}'
 
+
 async def fetch_page(session, author, page):
 	async with session.get(build_url(author, page)) as response:
-		return (response.status, await response.text())
+		return response.status, await response.text()
+
 
 if __name__ == "__main__":
 	if len(sys.argv) != 2:

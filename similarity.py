@@ -13,9 +13,10 @@ embed = hub.load("https://tfhub.dev/google/universal-sentence-encoder-multilingu
 
 print("Tensorflow ready", flush=True)
 
+
 def find_matches(title, titles):
 	titles.append(title)
-	vecs = embed(titles) # ["outputs"].eval(session=sess)
+	vecs = embed(titles)  # ["outputs"].eval(session=sess)
 	matches = list()
 	near_matches = list()
 	for i in range(len(vecs) - 1):
@@ -25,6 +26,7 @@ def find_matches(title, titles):
 		elif similarity > .4:
 			near_matches.append(titles[i])
 	return {"matches": matches, "near_matches": near_matches}
+
 
 for line in sys.stdin:
 	req = json.loads(line)
