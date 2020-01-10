@@ -9,6 +9,7 @@ import site_Fakku
 import site_Project_Hentai
 import json
 import traceback
+import functools
 
 site_modules = [site_2D_Market, site_Fakku, site_Project_Hentai]
 
@@ -97,15 +98,17 @@ async def recv_sim_calc():
 			near_matches.append("None")
 
 		embed = discord.Embed(
-			title=f"{site.name} + Results",
+			title=f"{site} + Results",
 			color=0x000000)
 		embed.add_field(
 			name="Matches",
-			value=matches.join("\n"),
+			value=functools.reduce(
+				lambda x, y: x + y + '\n', matches, '').strip(),
 			inline=False)
 		embed.add_field(
 			name="Near Matches",
-			value=near_matches.join("\n"),
+			value=functools.reduce(
+				lambda x, y: x + y + '\n', near_matches, '').strip(),
 			inline=False)
 
 		await msg.edit(embed=embed)
