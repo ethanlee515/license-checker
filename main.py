@@ -29,13 +29,13 @@ sim_calc = None
 
 async def process_site(site, author, title, channel):
 	msg = await channel.send(embed=discord.Embed(
-		title=f"Checking + {site.name}",
+		title=f"Checking {site.name}",
 		description="Fetching titles...",
 		color=0x000000))
 	try:
 		titles = await site.get_manga_by_author(author)
 		await msg.edit(embed=discord.Embed(
-			title=f"Checking + {site.name}",
+			title=f"Checking {site.name}",
 			description="Comparing titles...",
 			color=0x000000))
 		pending_msgs[msg.id] = {"message": msg, "site": site.name}
@@ -99,7 +99,7 @@ async def recv_sim_calc():
 			near_matches.append("None")
 
 		embed = discord.Embed(
-			title=f"{site} + Results",
+			title=f"{site} Results",
 			color=0x000000)
 		embed.add_field(
 			name="Matches",
