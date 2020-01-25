@@ -103,13 +103,11 @@ async def recv_sim_calc():
 			color=0x000000)
 		embed.add_field(
 			name="Matches",
-			value=functools.reduce(
-				lambda x, y: x + y + '\n', matches, '').strip(),
+			value='\n'.join(matches)
 			inline=False)
 		embed.add_field(
 			name="Near Matches",
-			value=functools.reduce(
-				lambda x, y: x + y + '\n', near_matches, '').strip(),
+			value='\n'.join(near_matches)
 			inline=False)
 
 		await msg.edit(embed=embed)
