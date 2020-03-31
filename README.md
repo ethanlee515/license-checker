@@ -1,6 +1,6 @@
 # license-checker
 Checks if a particular manga is licensed in English by looking it up on a given set of sites.
-Built for the [r/wholesomehentai](https://reddit.com/r/wholesomehentai) subreddit and its associated Discord server.
+Built for https://wholesomelist.herokuapp.com/ (which stemmed from the [r/wholesomehentai](https://reddit.com/r/wholesomehentai) subreddit) and its associated Discord server.
 ## Dependencies
 * Unix (MacOS/Linux); this bot doesn't work on Windows due to how subprocesses work)
 * Python 3.7 with pip 19.0+
