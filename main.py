@@ -92,25 +92,27 @@ async def recv_sim_calc():
 		matches = results["matches"]
 		near_matches = results["near_matches"]
 
-		if len(matches) == 0:
-			matches.append("None")
-		if len(near_matches) == 0:
-			near_matches.append("None")
-
 		embed = discord.Embed(
 			title=f"{site} Results",
 			color=0x000000)
+
+		v_matches = '\n'.join(matches)
+		if v_matches == '':
+			v_matches = 'None'
 		embed.add_field(
 			name="Matches",
-			value='\n'.join(matches),
+			value=v_matches,
 			inline=False)
+
+		v_near = '\n'.join(near_matches)
+		if v_near == '':
+			v_near = 'None'
 		embed.add_field(
 			name="Near Matches",
-			value='\n'.join(near_matches),
+			value=v_near,
 			inline=False)
 
 		await msg.edit(embed=embed)
-
 
 @lc.event
 async def on_ready():
