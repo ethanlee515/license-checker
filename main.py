@@ -9,7 +9,6 @@ import site_Fakku
 import site_Project_Hentai
 import json
 import traceback
-import functools
 
 site_modules = [site_2D_Market, site_Fakku, site_Project_Hentai]
 
