@@ -21,9 +21,9 @@ def find_matches(title, titles):
 	near_matches = list()
 	for i in range(len(vecs) - 1):
 		similarity = np.inner(vecs[i], vecs[-1])
-		if similarity > .75:
+		if similarity > .7:
 			matches.append(titles[i])
-		elif similarity > .4:
+		elif similarity > .25:
 			near_matches.append(titles[i])
 	return {"matches": matches, "near_matches": near_matches}
 

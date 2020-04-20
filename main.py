@@ -9,7 +9,8 @@ import site_Fakku
 import site_Project_Hentai
 import json
 import traceback
-import functools
+import romkan
+import magazine_check
 
 site_modules = [site_2D_Market, site_Fakku, site_Project_Hentai]
 
@@ -53,26 +54,64 @@ async def process_site(site, author, title, channel):
 @lc.event
 async def on_message(msg):
 	content = msg.content.strip().replace('“', '"').replace('”', '"')
-	if not re.match(r"\.lc(:?\s+.*)?$", content):
+	if not re.match(r"\.lctest(:?\s+.*)?$", content):
 		return
+
 	author = None
 	title = None
-	match1 = re.match(r'\.lc\s+"([^"]+)"\s+"([^"]+)"$', content)
-	match2 = re.match(r"\.lc\s+-(.)\s+(.+)\s+-(.)\s+(.+)$", content)
+	link = None
+	en = None
+
+	# Handle EN/JP prior to regex matching
+	if "-en" in content:
+		en = True
+		content = content.replace("-en", "").strip()
+	elif "-jp" in content:
+		en = False
+		content = content.replace("-jp", "").strip()
+	else:
+		# default to English
+		en = True
+
+	# Regex matching for flags with arguments
+	match1 = re.match(r'\.lctest\s+"([^"]+)"\s+"([^"]+)"\s+"([^"]+)"$', content)
+	match2 = re.match(r"\.lctest\s+-(.)\s+(.+)\s+-(.)\s+(.+)\s+-(.)\s+(.+)$", content)
 	if match1:
 		author = match1.group(1)
 		title = match1.group(2)
+		link = match1.group(3)
 	elif match2:
-		for i in (1, 3):
+		for i in range(1, 6, 2):
 			if match2.group(i) == 'a':
 				author = match2.group(i + 1).strip().strip('"')
 			elif match2.group(i) == 't':
 				title = match2.group(i + 1).strip().strip('"')
-	if author is None or len(author) == 0 or title is None or len(title) == 0:
+			elif match2.group(i) == 'l':
+				link = match2.group(i + 1).strip().strip('"')
+
+	if author is None or len(author) == 0 or title is None or len(title) == 0 or link is None or len(link) == 0:
 		asyncio.create_task(
-			msg.channel.send('Invalid command. Usage: `.lc "author" "title"`'
-				' or `.lc -a author -t title`'))
+			msg.channel.send('Invalid command. Usage: `.lc "author" "title" "link" (-en | -jp)` or `.lc -a author -t '
+							 'title -l link (-en | -jp)`'))
 		return
+
+	# TensorFlow doesn't like hyphens??? Idk
+	author = author.replace("-", " ")
+	title = title.replace("-", " ")
+
+	# Run the licensed magazine check
+	licensed = await magazine_check.check_link(link)
+	if licensed is not None:
+		await msg.channel.send(embed=discord.Embed(
+								title="**This doujin is most likely licensed.**",
+								description=f"It appeared in the licensed magazine issue `{licensed}`.",
+								color=0x000000))
+
+	# Handle all JP text conversion here
+	if not en:
+		await msg.channel.send("-jp flag detected. Translating title into Hiragana...")
+		title = romkan.to_hiragana(title)
+
 	await msg.channel.send(f"Looking up {title} by {author}.")
 	for site in site_modules:
 		asyncio.create_task(process_site(site, author, title, msg.channel))
@@ -114,6 +153,7 @@ async def recv_sim_calc():
 			inline=False)
 
 		await msg.edit(embed=embed)
+
 
 @lc.event
 async def on_ready():
