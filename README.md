@@ -2,7 +2,7 @@
 Checks if a particular manga is licensed in English by looking it up on a given set of sites.
 Built for https://wholesomelist.herokuapp.com/ (which stemmed from the [r/wholesomehentai](https://reddit.com/r/wholesomehentai) subreddit) and its associated Discord server.
 ## Dependencies
-* Unix (MacOS/Linux); this bot doesn't work on Windows due to how subprocesses work)
+* Unix (MacOS/Linux); this bot doesn't work on Windows due to TensorFlow-text having no WIndows installation
 * Python 3.7 with pip 19.0+
 * Firefox
 * [geckodriver](https://github.com/mozilla/geckodriver/releases)
@@ -14,7 +14,7 @@ Built for https://wholesomelist.herokuapp.com/ (which stemmed from the [r/wholes
 * Run `./Project_Hentai.py girl` to test your selenium installation. This should pull up the search results for "girl" from Project Hentai.
 ## Running
 * Execute `./main.py`
-* Give the Discord bot commands of the form `.lc "author" "title"` or `.lc -a author -t title`
+* Give the Discord bot commands of the form `.lc "author" "title" "link" (-en | -jp)` or `.lc -a author -t title -l link (-en | -jp)`
 ## Sites and status
 * [2DMarket](http://2d-market.com/): Done!
 * [Comic Bavel](https://comicbavel.com/): No English version exists.
