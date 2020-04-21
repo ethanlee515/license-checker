@@ -116,7 +116,7 @@ async def check_link(link):
 		magazine_issue = match3.group(1).lower()
 
 	# handle any wacky
-	if "," in magazine_issue:
+	if magazine_issue is not None and "," in magazine_issue:
 		magazine_issue = magazine_issue.split(",")[0].strip()
 
 	licensed = False
