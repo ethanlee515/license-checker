@@ -96,17 +96,14 @@ async def on_message(msg):
 							 'title -l link (-en | -jp)`'))
 		return
 
-	# TensorFlow doesn't like hyphens??? Idk
-	author = author.replace("-", " ")
-	title = title.replace("-", " ")
-
-	# Run the licensed magazine check
-	licensed = await magazine_check.check_link(link)
-	if licensed is not None:
-		await msg.channel.send(embed=discord.Embed(
-								title="**This doujin is most likely licensed.**",
-								description=f"It appeared in the licensed magazine issue `{licensed}`.",
-								color=0x000000))
+	# Run the licensed magazine check (only for nhentai)
+	if "nhentai.net/g/" in link:
+		licensed = await magazine_check.check_link(link)
+		if licensed is not None:
+			await msg.channel.send(embed=discord.Embed(
+									title="**This doujin is most likely licensed.**",
+									description=f"It appeared in the licensed magazine issue `{licensed}`.",
+									color=0x000000))
 
 	# Handle all JP text conversion here
 	if not en:
@@ -132,6 +129,7 @@ async def recv_sim_calc():
 
 		matches = results["matches"]
 		near_matches = results["near_matches"]
+		fringe_matches = results["fringe_matches"]
 
 		embed = discord.Embed(
 			title=f"{site} Results",
@@ -151,6 +149,14 @@ async def recv_sim_calc():
 		embed.add_field(
 			name="Near Matches",
 			value=v_near,
+			inline=False)
+
+		v_fringe = '\n'.join(fringe_matches)
+		if v_fringe == '':
+			v_fringe = 'None'
+		embed.add_field(
+			name="Fringe Matches",
+			value=v_fringe,
 			inline=False)
 
 		await msg.edit(embed=embed)
