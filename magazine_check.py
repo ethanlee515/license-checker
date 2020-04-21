@@ -1,6 +1,7 @@
 import re
 from bs4 import BeautifulSoup
 import aiohttp
+import asyncio
 
 
 def date_num_compare(magazine, issue):
@@ -80,6 +81,30 @@ async def get_title(link):
 		titles = soup.find_all('h1')
 
 		return str(titles[0])
+
+
+async def get_title_japanese(link):
+	# Input validation / pre-processing
+	link = link.lower()
+	if link[:7] == "http://":
+		link = "https://" + link[7:]
+	if "nhentai.net/g/" not in link:
+		raise Exception("Invalid link")
+	if not link[-1] == "/":
+		link = link + "/"
+
+	async with aiohttp.ClientSession() as session:
+		resp = await session.get(link)
+		page = await resp.text()
+		soup = BeautifulSoup(page, 'html.parser')
+		titles = soup.find_all('h2')
+
+		title_japanese = str(titles[0])
+
+		pattern_extractor = re.compile(r"(?:\s*[<\[({].*?[\])}>]\s*)*([^\[\](){}<>]*)(?:\s*[<\[({]/?.*?[\])}>]\s*)*$")
+		match = re.match(pattern_extractor, title_japanese.strip())
+
+		return match.group(1)
 
 
 async def check_link(link):

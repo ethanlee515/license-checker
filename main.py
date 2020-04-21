@@ -9,8 +9,8 @@ import site_Fakku
 import site_Project_Hentai
 import json
 import traceback
-import romkan
 import magazine_check
+import romkan
 
 
 site_modules = [site_2D_Market, site_Fakku, site_Project_Hentai]
@@ -64,12 +64,12 @@ async def on_message(msg):
 	en = None
 
 	# Handle EN/JP prior to regex matching
-	if "-en" in content:
+	if " -en" in content:
 		en = True
-		content = content.replace("-en", "").strip()
-	elif "-jp" in content:
+		content = content.replace(" -en", "").strip()
+	elif " -jp" in content:
 		en = False
-		content = content.replace("-jp", "").strip()
+		content = content.replace(" -jp", "").strip()
 	else:
 		# default to English
 		en = True
@@ -107,12 +107,20 @@ async def on_message(msg):
 
 	# Handle all JP text conversion here
 	if not en:
-		await msg.channel.send("-jp flag detected. Translating title into Hiragana...")
-		title = romkan.to_hiragana(title)
+		if "nhentai.net/g/" in link:
+			await msg.channel.send("-jp flag detected. Parsing Japanese title...")
+			title = await magazine_check.get_title_japanese(link)
+		else:
+			await msg.channel.send("-jp flag detected. Translating title to Hiragana...")
+			title = romkan.to_hiragana(title)
 
 	await msg.channel.send(f"Looking up {title} by {author}.")
 	for site in site_modules:
 		asyncio.create_task(process_site(site, author, title, msg.channel))
+	# if not en:
+	# 	await msg.channel.send(f"Looking up {jptitle} by {author}.")
+	#	for site in site_modules:
+	#		asyncio.create_task(process_site(site, author, jptitle, msg.channel))
 
 
 async def recv_sim_calc():
