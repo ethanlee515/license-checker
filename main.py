@@ -114,6 +114,8 @@ async def on_message(msg):
 			await msg.channel.send("-jp flag detected. Translating title to Hiragana...")
 			title = romkan.to_hiragana(title)
 
+	title = title.strip()
+
 	await msg.channel.send(f"Looking up {title} by {author}.")
 	for site in site_modules:
 		asyncio.create_task(process_site(site, author, title, msg.channel))

@@ -1,7 +1,6 @@
 import re
 from bs4 import BeautifulSoup
 import aiohttp
-import asyncio
 
 
 def date_num_compare(magazine, issue):
@@ -18,17 +17,25 @@ def date_num_compare(magazine, issue):
 
 	if match is not None:
 		startdate = licensed_magazines[magazine][1]
-		yearmatch = re.match(pattern, startdate)
+		enddate = licensed_magazines[magazine][2]
+
+		startmatch = re.match(pattern, startdate)
+		endmatch = re.match(pattern, enddate)
 
 		issueyear = int(match.group(1))
 		issuemonth = int(match.group(2))
 
-		startyear = int(yearmatch.group(1))
-		startmonth = int(yearmatch.group(2))
+		startyear = int(startmatch.group(1))
+		startmonth = int(startmatch.group(2))
 
-		if startyear > issueyear:
+		endyear = int(endmatch.group(1))
+		endmonth = int(endmatch.group(2))
+
+		if startyear > issueyear or issueyear > endyear:
 			return False
-		elif startyear == issueyear and startmonth < issuemonth:
+		elif startyear == issueyear and startmonth > issuemonth:
+			return False
+		elif endyear == issueyear and endmonth < issuemonth:
 			return False
 		return True
 	else:
@@ -48,18 +55,18 @@ def always_licensed(magazine, issue):
 
 
 licensed_magazines = {
-	"kairakuten": [date_num_compare, "2015-06", "now", None, None],
+	"kairakuten": [date_num_compare, "2015-06", "9999-99", None, None],
 	"x-eros": [date_num_compare, None, None, 30, -1],
-	"shitsurakuten": [date_num_compare, "2016-04", "now", None, None],
-	"kairakuten beast": [date_num_compare, "2016-12", "now", None, None],
+	"shitsurakuten": [date_num_compare, "2016-04", "9999-99", None, None],
+	"kairakuten beast": [date_num_compare, "2016-12", "9999-99", None, None],
 	"bavel": [always_licensed],
-	"europa": [date_num_compare, "2017-04", "now", 11, -1],
+	"europa": [date_num_compare, "2017-04", "9999-99", 11, -1],
 	"girls form": [date_num_compare, None, None, 13, 16],
 	"happining": [always_licensed],
 	"aoha": [always_licensed],
 	"weekly kairakuten": [always_licensed],
 	"dascomi": [always_licensed],
-	"koh": [date_num_compare, None, None, 1, 2]
+	"koh": [date_num_compare, "2013-12", "2014-07", 1, 2]
 }
 
 
