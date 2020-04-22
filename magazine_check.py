@@ -157,7 +157,9 @@ async def check_link(link):
 	if magazine_name in licensed_magazines:
 		licensed = licensed_magazines[magazine_name][0](magazine_name, magazine_issue)
 
+	market = "2dmarket.com" in title
+
 	if licensed:
-		return magazine_name.upper() + " " + magazine_issue
+		return magazine_name.upper() + " " + magazine_issue, market
 	else:
-		return None
+		return None, market

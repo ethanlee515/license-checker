@@ -55,7 +55,7 @@ async def process_site(site, author, title, channel):
 @lc.event
 async def on_message(msg):
 	content = msg.content.strip().replace('“', '"').replace('”', '"')
-	if not re.match(r"\.lc(:?\s+.*)?$", content):
+	if not re.match(r"\.lctest(:?\s+.*)?$", content):
 		return
 
 	author = None
@@ -75,8 +75,8 @@ async def on_message(msg):
 		en = True
 
 	# Regex matching for flags with arguments
-	match1 = re.match(r'\.lc\s+"([^"]+)"\s+"([^"]+)"\s+"([^"]+)"$', content)
-	match2 = re.match(r"\.lc\s+-(.)\s+(.+)\s+-(.)\s+(.+)\s+-(.)\s+(.+)$", content)
+	match1 = re.match(r'\.lctest\s+"([^"]+)"\s+"([^"]+)"\s+"([^"]+)"$', content)
+	match2 = re.match(r"\.lctest\s+-(.)\s+(.+)\s+-(.)\s+(.+)\s+-(.)\s+(.+)$", content)
 	if match1:
 		author = match1.group(1)
 		title = match1.group(2)
@@ -98,14 +98,13 @@ async def on_message(msg):
 
 	# Run the licensed magazine check (only for nhentai)
 	if "nhentai.net/g/" in link:
-		licensed = await magazine_check.check_link(link)
+		licensed, market = await magazine_check.check_link(link)
 		if licensed is not None:
 			await msg.channel.send(embed=discord.Embed(
 									title="**This doujin is most likely licensed.**",
 									description=f"It appeared in the licensed magazine issue `{licensed}`.",
 									color=0x000000))
-		nh_title = await magazine_check.get_title(link)
-		if "2d-market.com" in nh_title.lower():
+		if market:
 			await msg.channel.send(embed=discord.Embed(
 									title="**This doujin is most likely licensed.**",
 									description=f"It has `2D-market.com` in the title.",
