@@ -19,13 +19,16 @@ def find_matches(title, titles):
 	vecs = embed(titles)  # ["outputs"].eval(session=sess)
 	matches = list()
 	near_matches = list()
+	fringe_matches = list()
 	for i in range(len(vecs) - 1):
 		similarity = np.inner(vecs[i], vecs[-1])
-		if similarity > .75:
+		if similarity > .7:
 			matches.append(titles[i])
 		elif similarity > .4:
 			near_matches.append(titles[i])
-	return {"matches": matches, "near_matches": near_matches}
+		elif similarity > .25:
+			fringe_matches.append(titles[i])
+	return {"matches": matches, "near_matches": near_matches, "fringe_matches": fringe_matches}
 
 
 for line in sys.stdin:
