@@ -104,6 +104,12 @@ async def on_message(msg):
 									title="**This doujin is most likely licensed.**",
 									description=f"It appeared in the licensed magazine issue `{licensed}`.",
 									color=0x000000))
+		nh_title = await magazine_check.get_title(link)
+		if "2d-market.com" in nh_title.lower():
+			await msg.channel.send(embed=discord.Embed(
+									title="**This doujin is most likely licensed.**",
+									description=f"It has `2D-market.com` in the title.",
+									color=0x000000))
 
 	# Handle all JP text conversion here
 	if not en:
