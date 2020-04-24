@@ -98,13 +98,22 @@ async def on_message(msg):
 
 	# Run the licensed magazine check (only for nhentai)
 	if "nhentai.net/g/" in link:
-		licensed, market = await magazine_check.check_link(link)
+		licensed, tags, market = await magazine_check.check_link(link)
 		if licensed is not None:
 			await msg.channel.send(embed=discord.Embed(
 									title="**This doujin is most likely licensed.**",
 									description=f"It appeared in the licensed magazine issue `{licensed}`.",
 									color=0x000000))
-		if market:
+		if tags is not None:
+			for i in range(0, len(tags)):
+				tags[i] = f"`{tags[i]}`"
+			tags_str = ", ".join(tags)
+			await msg.channel.send(embed=discord.Embed(
+									title="**Proceed with caution.**",
+									description=f"This doujin has the controversial tags {tags_str} - FAKKU search"
+									" results will not show this doujin if not logged in.",
+									color=0x000000))
+		if market is True:
 			await msg.channel.send(embed=discord.Embed(
 									title="**This doujin is most likely licensed.**",
 									description=f"It has `2D-market.com` in the title.",
