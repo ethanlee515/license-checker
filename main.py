@@ -55,7 +55,7 @@ async def process_site(site, author, title, channel):
 @lc.event
 async def on_message(msg):
 	content = msg.content.strip().replace('“', '"').replace('”', '"')
-	if not re.match(r"\.lctest(:?\s+.*)?$", content):
+	if not re.match(r"\.lc(:?\s+.*)?$", content):
 		return
 
 	author = None
@@ -75,8 +75,8 @@ async def on_message(msg):
 		en = True
 
 	# Regex matching for flags with arguments
-	match1 = re.match(r'\.lctest\s+"([^"]+)"\s+"([^"]+)"\s+"([^"]+)"$', content)
-	match2 = re.match(r"\.lctest\s+-(.)\s+(.+)\s+-(.)\s+(.+)\s+-(.)\s+(.+)$", content)
+	match1 = re.match(r'\.lc\s+"([^"]+)"\s+"([^"]+)"\s+"([^"]+)"$', content)
+	match2 = re.match(r"\.lc\s+-(.)\s+(.+)\s+-(.)\s+(.+)\s+-(.)\s+(.+)$", content)
 	if match1:
 		author = match1.group(1)
 		title = match1.group(2)
