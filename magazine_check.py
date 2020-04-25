@@ -69,9 +69,20 @@ licensed_magazines = {
 	"koh": [date_num_compare, "2013-12", "2014-07", 1, 2]
 }
 
+# FAKKU search results will not show any doujin that has any of these tags if you're not logged in.
+# Log ins are locked behind a reCAPTCHA, so we can't scrape the controversial content.
+# As such, we have to do a precheck for any potential controversial tags.
+controversial_tags = [
+	"bondage",
+	"humiliation",
+	"tentacles",
+	"incest",
+	"inseki"
+]
 
-# Returns the title of a doujin
-async def get_title(link):
+
+# merge title and tag fetching, because
+async def process_site(link):
 	# Input validation / pre-processing
 	link = link.lower()
 	if link[:7] == "http://":
@@ -87,7 +98,15 @@ async def get_title(link):
 		soup = BeautifulSoup(page, 'html.parser')
 		titles = soup.find_all('h1')
 
-		return str(titles[0])
+		tag_extractor = re.compile(r"/tag/(.*)/")
+		link_pile = soup.find_all('a', href=tag_extractor)
+
+		tags = list()
+		for taglink in link_pile:
+			tag_match = re.match(tag_extractor, taglink["href"])
+			tags.append(tag_match.group(1).replace("-", " "))
+
+		return titles[0].string, tags
 
 
 async def get_title_japanese(link):
@@ -115,7 +134,16 @@ async def get_title_japanese(link):
 
 
 async def check_link(link):
-	title = await get_title(link)
+	title, tags = await process_site(link)
+
+	# Process the tags
+	matched_tags = list()
+	for tag in tags:
+		if tag in controversial_tags:
+			matched_tags.append(tag)
+
+	if len(matched_tags) == 0:
+		matched_tags = None
 
 	# Make the title lowercase
 	title = title.lower()
@@ -157,7 +185,9 @@ async def check_link(link):
 	if magazine_name in licensed_magazines:
 		licensed = licensed_magazines[magazine_name][0](magazine_name, magazine_issue)
 
+	market = "2d-market.com" in title
+
 	if licensed:
-		return magazine_name.upper() + " " + magazine_issue
+		return magazine_name.upper() + " " + magazine_issue, matched_tags, market
 	else:
-		return None
+		return None, matched_tags, market
