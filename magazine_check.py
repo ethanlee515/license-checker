@@ -127,7 +127,7 @@ async def get_title_japanese(link):
 
 		title_japanese = str(titles[0])
 
-		pattern_extractor = re.compile(r"(?:\s*[<\[({].*?[\])}>]\s*)*([^\[\](){}<>]*)(?:\s*[<\[({]/?.*?[\])}>]\s*)*$")
+		pattern_extractor = re.compile(r"^(?:\s*(?:=.*?=|<.*?>|\[.*?]|\(.*?\)|\{.*?})\s*)*(?:[^[|\](){}<>]*\s*\|\s*)?([^\[|\](){}<>]*?)(\s*(?:=.*?=|<.*?>|\[.*?]|\(.*?\)|\{.*?})\s*)*$")
 		match = re.match(pattern_extractor, title_japanese.strip())
 
 		return match.group(1)
