@@ -1,9 +1,9 @@
-numpy
+numpy~=1.19.2
 discord.py
 tensorflow-text>=2.0.0rc0
-tensorflow
+tensorflow<2.5,>=2.4.0rc0
 tensorflow-hub
 selenium
-aiohttp
+aiohttp<3.7.0,>=3.6.0
 beautifulsoup4
 romkan
