@@ -70,7 +70,11 @@ for page in count(1):
 		break
 	prods = driver.find_elements_by_class_name('grid-product__title-inner')
 	for product in prods:
-		print(product.get_attribute('innerHTML'))
+                title = product.get_attribute('innerHTML')
+                if title != '':
+                    if title.endswith('(DIGITAL)'):
+                        title = title[:-9].strip()
+                    print(title)
 	try:
 		res_count_elem = driver.find_element_by_class_name(
 				'pager__count-pages')
