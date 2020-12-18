@@ -59,7 +59,7 @@ licensed_magazines = {
 	"x-eros": [date_num_compare, None, None, 30, -1],
 	"shitsurakuten": [date_num_compare, "2016-04", "9999-99", None, None],
 	"kairakuten beast": [date_num_compare, "2016-12", "9999-99", None, None],
-	"bavel": [always_licensed],
+	"bavel": [date_num_compare, "2017-06", "9999-99", None, None],
 	"europa": [date_num_compare, "2017-04", "9999-99", 11, -1],
 	"girls form": [date_num_compare, None, None, 13, 16],
 	"happining": [always_licensed],
